@@ -1,0 +1,112 @@
+.SE_TABLE_TAB_DIV {
+  width: 100%;
+  padding: 5px;
+  border-bottom: 1px solid gray;
+}
+.SE_TABLE_TAB_DIV span {
+  padding: 5px;
+  margin: 2px 2px 0px 2px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border: 1px solid lightgray;
+  line-height: 20px;
+}
+.SE_TABLE_TAB_DIV span.SE_TABLE_TAB_SPAN_ACTIVE{
+  background-color: lightgray;
+}
+.SE_TABLE_TAB_DIV span.SE_TABLE_TAB_SPAN_INACTIVE{
+  background-color: white;
+}
+.SE_TABLE_SHEETS_DIV {
+  width: 98%;
+  margin: 20px auto;
+}
+.SE_TABLE_SHEET_DIV {
+  display: none;
+}
+.SE_TABLE_ATOMTABLE_DIV {
+}
+
+.SE_TABLE_LEFT_DIV {
+  background:lightblue; 
+  float:left; 
+}
+.SE_TABLE_LEFT_DIV span {
+  display:block; 
+  text-align:center; 
+  border:1px solid gray; 
+}
+.SE_TABLE_LEFT_DIV_INNER {
+  overflow-y:hidden;
+}
+.SE_TABLE_LEFT_DIV_INNER table.SE_TABLE_LEFT_DIV_TABLE {
+  width:100%; 
+  margin-bottom:5px;
+}
+.SE_TABLE_LEFT_DIV_INNER table.SE_TABLE_LEFT_DIV_TABLE th {
+  text-align:center;
+}
+
+.SE_TABLE_RIGHT_DIV {
+  height:auto; 
+  float:left; 
+  overflow: auto;
+}
+.SE_TABLE_RIGHT_DIV_HEADER {
+  overflow-x:hidden; 
+  background:lightgray;
+}
+.SE_TABLE_RIGHT_DIV_HEADER_INNER {
+}
+.SE_TABLE_RIGHT_DIV_HEADER_INNER table {
+}
+.SE_TABLE_RIGHT_DIV_HEADER_INNER table td {
+  text-align:center;
+}
+
+.SE_TABLE_RIGHT_DIV_BODY {
+  width:100%; 
+  overflow:auto;
+}
+.SE_TABLE_RIGHT_DIV_BODY table{
+}
+.SE_TABLE_RIGHT_DIV_BODY table td{
+  text-align:center;
+}
+
+.SE_TABLE_ATOMTABLE_DIV td{
+  border: 1px solid gray;
+}
+.SE_TABLE_ATOMTABLE_DIV th{
+  border: 1px solid gray;
+}
+.SE_TABLE_ATOMTABLE_DIV th div {
+  width: 100%;
+  height: 100%;
+  font-size: 12px;
+  /*line-height: 20px;*/
+  /*支持IE，chrome，FF不支持*/
+  word-break:break-all;
+  /*支持IE，chrome，FF*/ 
+  word-wrap:break-word;
+  overflow: auto;
+}
+
+.SE_TABLE_ATOMTABLE_DIV td div {
+  width: 100%;
+  height: 100%;
+  font-size: 12px;
+  /*line-height: 20px;*/
+  /*支持IE，chrome，FF不支持*/
+  word-break:break-all;
+  /*支持IE，chrome，FF*/ 
+  word-wrap:break-word;
+  overflow-x: auto;
+}
+
+.SE_TABLE_BG_WHITE{
+  background-color: white;
+}
+.SE_TABLE_BG_LIGHT{
+  background-color: #EEEEEE;
+}
