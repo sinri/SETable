@@ -1,0 +1,46 @@
+<!DOCTYPE html>    
+<html>    
+    <head>    
+    <meta http-equiv="Content-Type" content="text/html; charset=utf8" />
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+    <script type="text/javascript" src="se_table.js"></script>
+    <link rel="stylesheet" type="text/css" href="se_table.css">
+    <title>SETable Sample</title>    
+    <script type="text/javascript">
+    var json='{"sheets":[{"sheet_name":"Sample A","sheet_data":[{"corner_span":"X","fixed_left":[["I"],["II"],["III"],["IV"],["V"],["VI"],["VII"]],"header":[["Namae","05.01-05.01","05.02-05.08","05.09-05.15","05.16-05.22","05.23-05.29","05.30-05.31"]],"body":[["Lasir",{"value_type":"String","value":"11,688"},{"value_type":"String","value":"65,368"},{"value_type":"String","value":"48,926"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}],["Loir Kioenu Jiue",{"value_type":"String","value":"65,240"},{"value_type":"String","value":"1,121,698"},{"value_type":"String","value":"81,347"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}],["Guias Kius Chi",{"value_type":"String","value":"52,749"},{"value_type":"String","value":"121,388"},{"value_type":"String","value":"121,273"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}],["Huoid Erias",{"value_type":"String","value":"6,431"},{"value_type":"String","value":"170,881"},{"value_type":"String","value":"208,925"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}],["Lio Humans",{"value_type":"String","value":"28,523"},{"value_type":"String","value":"66,982"},{"value_type":"String","value":"100,788"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}],["Poi Kujiha",{"value_type":"String","value":"61,281"},{"value_type":"String","value":"225,206"},{"value_type":"String","value":"229,994"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}],["Laude Jutira",{"value_type":"String","value":"7,276"},{"value_type":"String","value":"79,586"},{"value_type":"String","value":"89,284"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}]],"tail":[]}]},{"sheet_name":"Sample B","sheet_data":[{"header":[["Hujide Guas","05.01-05.01","05.02-05.08","05.09-05.15","05.16-05.22","05.23-05.29","05.30-05.31"]],"body":[["Cocoa Guiss",{"value_type":"String","value":"11,688"},{"value_type":"String","value":"65,368"},{"value_type":"String","value":"48,926"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}],["Yuishi de Las",{"value_type":"String","value":"65,240"},{"value_type":"String","value":"1,121,698"},{"value_type":"String","value":"81,347"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}],["Nikua Gusrin",{"value_type":"String","value":"52,749"},{"value_type":"String","value":"121,388"},{"value_type":"String","value":"121,273"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}],["Lifuv Tras",{"value_type":"String","value":"6,431"},{"value_type":"String","value":"170,881"},{"value_type":"String","value":"208,925"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}],["Bunu Faja",{"value_type":"String","value":"28,523"},{"value_type":"String","value":"66,982"},{"value_type":"String","value":"100,788"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}],["Natsha Vokova",{"value_type":"String","value":"61,281"},{"value_type":"String","value":"225,206"},{"value_type":"String","value":"229,994"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}],["Tanya Assein",{"value_type":"String","value":"7,276"},{"value_type":"String","value":"79,586"},{"value_type":"String","value":"89,284"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}]],"tail":[]}]}]}';
+    var config={
+        cell:{
+            width: 80,
+            height: 30
+        },
+        box:{
+            width: 300,
+            height: 300
+        }
+    }
+
+    $(document).ready(function(){
+        se_table('target',JSON.parse(json),config);
+    })
+    </script>  
+    </head>    
+    <body>  
+        <h1>Sample :: Sinri Edogawa Table Version I</h1>  
+        <div>
+            <pre>
+ * Sinri Edogawa Table Version I
+ * -------------------------------
+ * Herz und Mund und Tat und Leben
+ * muß von Christo Zeugnis geben
+ * ohne Furcht und Heuchelei,
+ * daß er Gott und Heiland sei.
+ * ===============================
+ * Copyright 2016 Sinri Edogawa
+ * Design for LeqeeData Project
+ * Published Under MIT License
+            </pre>
+        </div>
+        <div id="target">
+        </div>
+    </body>    
+</html>    
