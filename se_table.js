@@ -21,6 +21,19 @@
  * > config: the size config, contains cell and box, each contains width and height;
  */
 
+/**
+ * Polyfill
+ * This methods have been added to the ECMAScript 6 specification and may not be available in all JavaScript implementations yet. 
+ * But you can polyfill.
+ */
+
+if (!String.prototype.startsWith) {
+    String.prototype.startsWith = function(searchString, position){
+      position = position || 0;
+      return this.substr(position, searchString.length) === searchString;
+  };
+}
+
 
 var se_table=function(target_div_id, sheets_data,config){
 	var that=this;
@@ -34,6 +47,23 @@ var se_table=function(target_div_id, sheets_data,config){
 	this.config.cell_height=30;
 	this.config.box_width=300;
 	this.config.box_height=200;
+
+	this.config.scroll_size=0;
+	console.log(config);
+	if(config.browser){
+		if(config.browser.platform.search("Windows")!=-1){
+			if(config.browser.browser.search("Chrome")!=-1){
+				this.config.scroll_size=17;
+			}
+			else if(config.browser.browser.search("Internet Explorer")!=-1){
+				this.config.scroll_size=17;
+			}
+			else if(config.browser.browser.search("Firefox")!=-1){
+				this.config.scroll_size=17;
+			}
+		}
+	}
+	console.log(this.config);
 
 	if(config){
 		if(config.cell){
@@ -130,6 +160,7 @@ var se_table=function(target_div_id, sheets_data,config){
 		// html+="<!-- "+JSON.stringify(table_obj)+" -->";
 
 		//create left fixed cols
+		var has_left_bar=false;
 		if(table_obj.fixed_left){
 			var LEFT_DIV_ID="SE_TABLE_"+sheet_index+"_"+table_index+"_LEFT_DIV";
 			var LEFT_DIV_INNER_ID="SE_TABLE_"+sheet_index+"_"+table_index+"_LEFT_DIV_INNER";
@@ -144,7 +175,7 @@ var se_table=function(target_div_id, sheets_data,config){
 			for(var row_index in table_obj.fixed_left){
 				var row = table_obj.fixed_left[row_index];
 
-				html+="<tr>";
+				html+="<tr id='SE_TABLE_LEFT_ROW_"+sheet_index+"_"+table_index+"_"+row_index+"'>";
 
 				for(var col_index in row){
 					var col=row[col_index];
@@ -164,11 +195,8 @@ var se_table=function(target_div_id, sheets_data,config){
 					html+=">";
 
 					html+="<div>";
-					if(!col.value){
-						html+=col;
-					}else{
-						html+=col.value;
-					}
+					var cell_value=((!col.value)?col:col.value);
+					html+="<input class='SE_TABLE_BODY_CELL_INPUT' readonly='readonly' value='"+cell_value+"'>";
 					html+="</div>";
 
 					html+="</th>";
@@ -180,6 +208,8 @@ var se_table=function(target_div_id, sheets_data,config){
 			html+="</table>";
 			html+="</div>";
 			html+="</div>";
+
+			has_left_bar=true;
 		}
 
 		//create hontai
@@ -194,43 +224,40 @@ var se_table=function(target_div_id, sheets_data,config){
 
 			inner_html+="<tr>";
 
-				for(var col_index in row){
-					var col=row[col_index];
-					if(!col)continue;
-					inner_html+="<td ";
-					if(col.rowspan){
-						inner_html+="rowspan='"+col.rowspan+"' ";
-					}
-					if(col.colspan){
-						inner_html+="colspan='"+col.rowspan+"' ";
-						header_real_cols+=col.rowspan*1;
-					}else{
-						header_real_cols+=1;
-					}
-					inner_html+="class='";
-					if(col.style_id){
-						inner_html+=col.style_id+" ";
-					}
-					inner_html+="'";
-					inner_html+=">";
-
-					inner_html+="<div>";
-
-					if(!col.value){
-						inner_html+=col;
-					}else{
-						inner_html+=col.value;
-					}
-
-					inner_html+="</div>";
-
-					inner_html+="</td>";
+			for(var col_index in row){
+				var col=row[col_index];
+				if(!col)continue;
+				inner_html+="<td ";
+				if(col.rowspan){
+					inner_html+="rowspan='"+col.rowspan+"' ";
 				}
+				if(col.colspan){
+					inner_html+="colspan='"+col.rowspan+"' ";
+					header_real_cols+=col.rowspan*1;
+				}else{
+					header_real_cols+=1;
+				}
+				inner_html+="class='";
+				if(col.style_id){
+					inner_html+=col.style_id+" ";
+				}
+				inner_html+="'";
+				inner_html+=">";
 
-				inner_html+="</tr>";
+				inner_html+="<div>";
+
+				var cell_value=((!col.value)?col:col.value);
+				inner_html+="<input class='SE_TABLE_BODY_CELL_INPUT' readonly='readonly' value='"+cell_value+"'>";
+
+				inner_html+="</div>";
+
+				inner_html+="</td>";
+			}
+
+			inner_html+="</tr>";
 		}
 
-		html+="<div class='SE_TABLE_RIGHT_DIV'>";
+		html+="<div class='SE_TABLE_RIGHT_DIV "+(has_left_bar?'':'SE_TABLE_RIGHT_DIV_FULL')+"'>";
 		html+="<div class='SE_TABLE_RIGHT_DIV_HEADER' id='"+RIGHT_DIV_HEADER_ID+"' style='width:"+(header_real_cols*that.config.cell_width)+"px;"+"'>";
 		html+="<div class='SE_TABLE_RIGHT_DIV_HEADER_INNER'>";
 		html+="<table cellpadding='0' cellspacing='0' border='0'>";
@@ -251,7 +278,7 @@ var se_table=function(target_div_id, sheets_data,config){
 		for(var row_index in table_obj.body){
 			var row=table_obj.body[row_index];
 
-			html+="<tr>";
+			html+="<tr id='SE_TABLE_BODY_ROW_"+sheet_index+"_"+table_index+"_"+row_index+"'>";
 
 			for(var col_index in row){
 				var col=row[col_index];
@@ -277,11 +304,8 @@ var se_table=function(target_div_id, sheets_data,config){
 				html+=">";
 
 				html+="<div>";
-				if(!col.value){
-					html+=col;
-				}else{
-					html+=col.value;
-				}
+				var cell_value=((!col.value)?col:col.value);
+				html+="<input class='SE_TABLE_BODY_CELL_INPUT' readonly='readonly' value='"+cell_value+"'>";
 				html+="</div>";
 
 				html+="</td>";
@@ -320,11 +344,8 @@ var se_table=function(target_div_id, sheets_data,config){
 				html+=">";
 
 				html+="<div>";
-				if(!col.value){
-					html+=col;
-				}else{
-					html+=col.value;
-				}
+				var cell_value=((!col.value)?col:col.value);
+				html+="<input class='SE_TABLE_BODY_CELL_INPUT' readonly='readonly' value='"+cell_value+"'>";
 				html+="</div>";
 
 				html+="</td>";
@@ -342,6 +363,74 @@ var se_table=function(target_div_id, sheets_data,config){
 
 		html+="</div>";
 		return html;
+	}
+
+	this.sortForColumn=function(ID_OF_SE_TABLE_ATOMTABLE_DIV_S_T,base_col_id,sort_method){
+		function getRightTrListItemValue(right_tr_list,row_id){
+			return (right_tr_list[row_id].children[base_col_id].children[0].children[0].value);
+		}
+
+		console.log('sortForColumn('+ID_OF_SE_TABLE_ATOMTABLE_DIV_S_T+','+base_col_id+')');
+		var s_t=ID_OF_SE_TABLE_ATOMTABLE_DIV_S_T.substr(23).split('_');
+		var sheet_id=s_t[0];
+		var table_id=s_t[1];
+		console.log('OF SHEET '+sheet_id+' TABLE '+table_id);
+		//LEFT TRs as SE_TABLE_LEFT_ROW_S_T_R
+		//RIGHT TRs as SE_TABLE_BODY_ROW_S_T_R
+		var left_tr_list=$('tr').filter(function() {
+	        return this.id.startsWith('SE_TABLE_LEFT_ROW_'+sheet_id+"_"+table_id+"_");
+	    })
+	    var right_tr_list=$('tr').filter(function() {
+	        return this.id.startsWith('SE_TABLE_BODY_ROW_'+sheet_id+"_"+table_id+"_");
+	    })
+
+	    var sortObjs=[];
+	    for(var i=0;i<right_tr_list.size();i++){
+	    	sortObjs[i]={k:i,v:getRightTrListItemValue(right_tr_list,i)};
+	    }
+	    // console.log(sortObjs)
+
+	    sortObjs.sort(function(a,b){
+	    	if(sort_method=='number_asc'){
+	    		var va=parseFloat(a.v.replace(/[^0-9\.\-\+]/,''));
+	    		var vb=parseFloat(b.v.replace(/[^0-9\.\-\+]/,''));
+	    		return va-vb;
+	    	}
+	    	else if(sort_method=='number_desc'){
+	    		var va=parseFloat(a.v.replace(/[^0-9\.\-\+]/,''));
+	    		var vb=parseFloat(b.v.replace(/[^0-9\.\-\+]/,''));
+	    		return vb-va;
+	    	}
+	    	else if(sort_method=='desc'){
+	    		var r = (a.v < b.v);
+	    		return r?1:-1;
+	    	}
+	    	else{//or as 'asc'
+	    		var r = (a.v > b.v);
+	    		return r?1:-1;
+	    	}
+	    })
+	    // console.log(sortObjs)
+
+	    var left=[];
+	    var right=[];
+
+	    for(var k in sortObjs){
+	    	console.log(sortObjs[k]);
+	    	if(left_tr_list.size()>0){
+	    		left[k]=left_tr_list[sortObjs[k].k].innerHTML;
+	    	}
+	    	right[k]=right_tr_list[sortObjs[k].k].innerHTML;
+	    }
+	    // console.log(left);
+	    // console.log(right);
+
+	    for(var i=0;i<right_tr_list.length;i++){
+	    	if(left_tr_list.size()>0){
+	    		left_tr_list[i].innerHTML=left[i];
+	    	}
+	    	right_tr_list[i].innerHTML=right[i];
+	    }
 	}
 
 	this.init();
@@ -363,10 +452,16 @@ var se_table=function(target_div_id, sheets_data,config){
 	$(".SE_TABLE_LEFT_DIV_INNER").css("height",(this.config.box_height-this.config.cell_height)+"px");
 
 	$(".SE_TABLE_RIGHT_DIV").css("width",(this.config.box_width-this.config.cell_width)+"px");
-	$(".SE_TABLE_RIGHT_DIV").css("height",this.config.box_height+"px");
+	$(".SE_TABLE_RIGHT_DIV").css("height",(this.config.box_height+this.config.scroll_size)+"px");
 
+	//if no LEFT
+	$(".SE_TABLE_RIGHT_DIV_FULL").css("width",(this.config.box_width)+"px");
 
-	$(".SE_TABLE_RIGHT_DIV_BODY").css("height",(this.config.box_height-this.config.cell_height)+"px");
+	$(".SE_TABLE_ATOMTABLE_DIV").css("width",(this.config.box_width+2)+"px");
+	$(".SE_TABLE_ATOMTABLE_DIV").css("height",(this.config.box_height+1)+"px");
+
+	$(".SE_TABLE_RIGHT_DIV_BODY").css("width",($(".SE_TABLE_RIGHT_DIV_BODY").css("width").replace('px','')*1+this.config.scroll_size)+"px")
+	$(".SE_TABLE_RIGHT_DIV_BODY").css("height",(this.config.box_height-this.config.cell_height-2)+"px");
 
 	return this;
 }
@@ -398,4 +493,5 @@ function onSETableTabSwitch(active_target){
 	$('div.SE_TABLE_SHEET_DIV').css('display','none');
 	$(SHEET_DIV_ID).css("display",'block');
 }
+
 
