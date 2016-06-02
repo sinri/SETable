@@ -1,7 +1,7 @@
 .SE_TABLE_TAB_DIV {
   width: 100%;
-  padding: 5px;
-  border-bottom: 1px solid gray;
+  padding: 4px;
+  border-bottom: 1px solid lightgray;
 }
 .SE_TABLE_TAB_DIV span {
   padding: 5px;
@@ -25,6 +25,7 @@
   display: none;
 }
 .SE_TABLE_ATOMTABLE_DIV {
+  border: 1px solid lightgray;
 }
 
 .SE_TABLE_LEFT_DIV {
@@ -51,10 +52,16 @@
   height:auto; 
   float:left; 
   overflow: auto;
+
+  /*overflow-x: scroll;*/
+  /*padding-bottom: 17px;*/
 }
 .SE_TABLE_RIGHT_DIV_HEADER {
   overflow-x:hidden; 
   background:lightgray;
+
+  /*overflow-y: scroll;*/
+  /*padding-right: 17px;*/
 }
 .SE_TABLE_RIGHT_DIV_HEADER_INNER {
 }
@@ -67,6 +74,9 @@
 .SE_TABLE_RIGHT_DIV_BODY {
   width:100%; 
   overflow:auto;
+
+  /*overflow-y: scroll;*/
+  /*padding-right: 17px;*/
 }
 .SE_TABLE_RIGHT_DIV_BODY table{
 }
@@ -89,7 +99,7 @@
   word-break:break-all;
   /*支持IE，chrome，FF*/ 
   word-wrap:break-word;
-  overflow: auto;
+  overflow: hidden;
 }
 
 .SE_TABLE_ATOMTABLE_DIV td div {
@@ -101,7 +111,7 @@
   word-break:break-all;
   /*支持IE，chrome，FF*/ 
   word-wrap:break-word;
-  overflow-x: auto;
+  overflow: hidden;
 }
 
 .SE_TABLE_BG_WHITE{
@@ -110,3 +120,15 @@
 .SE_TABLE_BG_LIGHT{
   background-color: #EEEEEE;
 }
+
+input.SE_TABLE_BODY_CELL_INPUT {
+  width:95%;
+  height: 95%;
+  border: none;
+  background-color:transparent;
+}
+
+/*::-webkit-scrollbar {
+  width: 1px;
+}*/
+
