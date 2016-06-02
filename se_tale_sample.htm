@@ -16,11 +16,16 @@
         box:{
             width: 300,
             height: 300
-        }
+        },
+        browser: { browser:'Safari', version : '601.6.17', agent : 'Safari 601.6.17', platform : 'Mac OS X' }//to be actual
     }
 
     $(document).ready(function(){
         se_table('target',JSON.parse(json),config);
+        // SETable.sortForColumn('SE_TABLE_ATOMTABLE_DIV_0_0',1,'asc');
+        // SETable.sortForColumn('SE_TABLE_ATOMTABLE_DIV_0_0',1,'desc');
+        // SETable.sortForColumn('SE_TABLE_ATOMTABLE_DIV_1_0',1,'number_asc');
+        // SETable.sortForColumn('SE_TABLE_ATOMTABLE_DIV_0_0',1,'number_desc');
     })
     </script>  
     </head>    
