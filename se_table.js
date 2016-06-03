@@ -17,7 +17,7 @@
  * Params:
  * > target_div_id: the id of the target div
  * > sheets_data: the data struct for the table. You can try with 
- 	var sheets_data_sample=JSON.parse('{"sheets":[{"sheet_name":"\u7ade\u54c1\u5e97\u94fa\u60c5\u62a5","sheet_data":[{"corner_span":"X","fixed_left":[["I"],["II"],["III"],["IV"],["V"],["VI"],["VII"]],"header":[["\u5e97\u94fa","05.01-05.01","05.02-05.08","05.09-05.15","05.16-05.22","05.23-05.29","05.30-05.31"]],"body":[["noah\u4f18\u5b66\u90ce\u4e13\u5356\u5e97",{"value_type":"String","value":"11,688"},{"value_type":"String","value":"65,368"},{"value_type":"String","value":"48,926"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}],["\u4e07\u626c\u6570\u7801\u4e13\u8425\u5e97",{"value_type":"String","value":"65,240"},{"value_type":"String","value":"1,121,698"},{"value_type":"String","value":"81,347"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}],["\u5f18\u8d3a\u6570\u7801\u4e13\u8425\u5e97",{"value_type":"String","value":"52,749"},{"value_type":"String","value":"121,388"},{"value_type":"String","value":"121,273"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}],["\u5feb\u6613\u5178\u7231\u7ef4\u4f0a\u4e13\u5356\u5e97",{"value_type":"String","value":"6,431"},{"value_type":"String","value":"170,881"},{"value_type":"String","value":"208,925"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}],["\u6613\u5b66\u5178\u65d7\u8230\u5e97",{"value_type":"String","value":"28,523"},{"value_type":"String","value":"66,982"},{"value_type":"String","value":"100,788"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}],["\u6b65\u6b65\u9ad8\u6bcd\u5a74\u65d7\u8230\u5e97",{"value_type":"String","value":"61,281"},{"value_type":"String","value":"225,206"},{"value_type":"String","value":"229,994"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}],["\u6e05\u534e\u7d2b\u5149\u4e16\u7eaa\u901a\u7528\u5e97",{"value_type":"String","value":"7,276"},{"value_type":"String","value":"79,586"},{"value_type":"String","value":"89,284"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}]],"tail":[]}]},{"sheet_name":"\u7ade\u54c1\u5e97\u94fa\u60c5\u62a5 - 2","sheet_data":[{"corner_span":"Y","fixed_left":[["I"],["II"],["III"],["IV"],["V"],["VI"],["VII"]],"header":[["\u5e97\u94fa","05.01-05.01","05.02-05.08","05.09-05.15","05.16-05.22","05.23-05.29","05.30-05.31"]],"body":[["noah\u4f18\u5b66\u90ce\u4e13\u5356\u5e97",{"value_type":"String","value":"11,688"},{"value_type":"String","value":"65,368"},{"value_type":"String","value":"48,926"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}],["\u4e07\u626c\u6570\u7801\u4e13\u8425\u5e97",{"value_type":"String","value":"65,240"},{"value_type":"String","value":"1,121,698"},{"value_type":"String","value":"81,347"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}],["\u5f18\u8d3a\u6570\u7801\u4e13\u8425\u5e97",{"value_type":"String","value":"52,749"},{"value_type":"String","value":"121,388"},{"value_type":"String","value":"121,273"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}],["\u5feb\u6613\u5178\u7231\u7ef4\u4f0a\u4e13\u5356\u5e97",{"value_type":"String","value":"6,431"},{"value_type":"String","value":"170,881"},{"value_type":"String","value":"208,925"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}],["\u6613\u5b66\u5178\u65d7\u8230\u5e97",{"value_type":"String","value":"28,523"},{"value_type":"String","value":"66,982"},{"value_type":"String","value":"100,788"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}],["\u6b65\u6b65\u9ad8\u6bcd\u5a74\u65d7\u8230\u5e97",{"value_type":"String","value":"61,281"},{"value_type":"String","value":"225,206"},{"value_type":"String","value":"229,994"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}],["\u6e05\u534e\u7d2b\u5149\u4e16\u7eaa\u901a\u7528\u5e97",{"value_type":"String","value":"7,276"},{"value_type":"String","value":"79,586"},{"value_type":"String","value":"89,284"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"},{"value_type":"String","value":"0"}]],"tail":[]}]}]}');
+ 	var sheets_data_sample=JSON.parse(sheets_data_json_string);
  * > config: the size config, contains cell and box, each contains width and height;
  */
 
@@ -33,7 +33,6 @@ if (!String.prototype.startsWith) {
       return this.substr(position, searchString.length) === searchString;
   };
 }
-
 
 var se_table=function(target_div_id, sheets_data,config){
 	var that=this;
@@ -68,32 +67,33 @@ var se_table=function(target_div_id, sheets_data,config){
 	if(config){
 		if(config.cell){
 			if(config.cell.width){
-				this.config.cell_width=config.cell.width;
+				this.config.cell_width=Math.max(parseInt(config.cell.width),this.config.cell_width);
 			}
 			if(config.cell.height){
-				this.config.cell_height=config.cell.height;
+				this.config.cell_height=Math.max(parseInt(config.cell.height),this.config.cell_height);
 			}
 		}
 		if(config.box){
 			if(config.box.width){
-				this.config.box_width=config.box.width;
+				this.config.box_width=Math.max(parseInt(config.box.width),this.config.box_width);
 			}
 			if(config.box.height){
-				this.config.box_width=config.box.height;
+				this.config.box_height=Math.max(parseInt(config.box.height),this.config.box_height);
 			}
 		}
 	}
 
+	this.format_task={};
+
 	this.init=function(){
-		//TODO
 		var html="";
 		// Various
 		var tabs_div=that.createTabs();
 		var sheets=that.createSheets();
-
+		// var clear_both_div="<div style='clear:both'></div>";
 
 		//Fin
-		html+=tabs_div+sheets;
+		html+=tabs_div+sheets;//+clear_both_div;
 		that.target_div.innerHTML=(html);
 
 		if(that.sheets_data && that.sheets_data.sheets && that.sheets_data.sheets.length>0){
@@ -161,14 +161,51 @@ var se_table=function(target_div_id, sheets_data,config){
 
 		//create left fixed cols
 		var has_left_bar=false;
+		var has_multi_row_in_bar=false;
 		if(table_obj.fixed_left){
 			var LEFT_DIV_ID="SE_TABLE_"+sheet_index+"_"+table_index+"_LEFT_DIV";
 			var LEFT_DIV_INNER_ID="SE_TABLE_"+sheet_index+"_"+table_index+"_LEFT_DIV_INNER";
 
 			html+="<div id='"+LEFT_DIV_ID+"' class='SE_TABLE_LEFT_DIV'>";
-			html+="<span>";
-			html+=(table_obj.corner_span?table_obj.corner_span:'');
-			html+="</span>";
+			
+			// html+="<span>";
+			// html+=(table_obj.corner_span?table_obj.corner_span:'');
+			// html+="</span>";
+
+			html+="<table class='SE_TABLE_LEFT_DIV_CORNER_TABLE'>";
+			console.log(typeof table_obj.corner_span)
+			if(typeof table_obj.corner_span == 'object'){
+				var rowspan=(table_obj.corner_span.rowspan?table_obj.corner_span.rowspan:1);
+				var colspan=(table_obj.corner_span.colspan?table_obj.corner_span.colspan:1);
+				html+="<tr><th rowspan='"+rowspan+"' colspan='"+colspan+"' style='width:"+(that.config.cell_width)+"px;height:"+(that.config.cell_height)+"px'><input class='SE_TABLE_LEFT_CELL_INPUT' value='";
+				html+=table_obj.corner_span.value;
+				html+="'></th></tr>";
+				corner_rows=rowspan;
+				corner_cols=colspan;
+			}else if(typeof table_obj.corner_span == 'array'){
+				corner_rows=0;
+				corner_cols=0;
+				for(var rk in table_obj.corner_span){
+					html+="<tr>";
+					for(var ck in table_obj.corner_span[rk]){
+						var item=table_obj.corner_span[rk][ck];
+						var rowspan=(item.rowspan?item.rowspan:1);
+						var colspan=(item.colspan?item.colspan:1);
+						html+="<th rowspan='"+rowspan+"' colspan='"+colspan+"' style='width:"+(that.config.cell_width*colspan)+"px;height:"+(that.config.cell_height*rowspan)+"px'>";
+						html+="<input class='SE_TABLE_LEFT_CELL_INPUT' value='"+item.value+"'>";
+						html+="</th>"
+						corner_rows+=rowspan;
+						corner_cols+=colspan;
+					}
+					html+="</tr>";
+				}
+			}else{
+				html+="<tr><th style='width:"+(that.config.cell_width)+"px;height:"+(that.config.cell_height)+"px'><input class='SE_TABLE_LEFT_CELL_INPUT' value='"+table_obj.corner_span+"'></th></tr>";
+				corner_rows=1;
+				corner_cols=1;
+			}
+			html+="</table>";
+
 			html+="<div id='"+LEFT_DIV_INNER_ID+"' class='SE_TABLE_LEFT_DIV_INNER'>";
 			html+="<table cellpadding='0' cellspacing='0' border='0' class='SE_TABLE_LEFT_DIV_TABLE'>";
 
@@ -181,25 +218,34 @@ var se_table=function(target_div_id, sheets_data,config){
 					var col=row[col_index];
 					if(!col)continue;
 					html+="<th ";
+					var rowspan=1;
+					var colspan=1;
 					if(col.rowspan){
 						html+="rowspan='"+col.rowspan+"' ";
+						rowspan=col.rowspan;
 					}
 					if(col.colspan){
 						html+="colspan='"+col.rowspan+"' ";
+						colspan=col.colspan;
 					}
 					html+="class='";
 					if(col.style_id){
 						html+=col.style_id+" ";
 					}
-					html+="'";
+					html+="' ";
+					html+="style='width:"+(that.config.cell_width*colspan)+"px;height:"+(that.config.cell_height*rowspan)+"px'";
 					html+=">";
 
 					html+="<div>";
 					var cell_value=((!col.value)?col:col.value);
-					html+="<input class='SE_TABLE_BODY_CELL_INPUT' readonly='readonly' value='"+cell_value+"'>";
+					html+="<input class='SE_TABLE_LEFT_CELL_INPUT' readonly='readonly' value='"+cell_value+"'>";
 					html+="</div>";
 
 					html+="</th>";
+
+					if(rowspan>1){
+						has_multi_row_in_bar=true;
+					}
 				}
 
 				html+="</tr>";
@@ -224,16 +270,22 @@ var se_table=function(target_div_id, sheets_data,config){
 
 			inner_html+="<tr>";
 
+			header_real_cols=0;
+
 			for(var col_index in row){
 				var col=row[col_index];
 				if(!col)continue;
-				inner_html+="<td ";
+				var rowspan=1;
+				var colspan=1;
+				inner_html+="<th ";
 				if(col.rowspan){
 					inner_html+="rowspan='"+col.rowspan+"' ";
+					rowspan=col.rowspan;
 				}
 				if(col.colspan){
-					inner_html+="colspan='"+col.rowspan+"' ";
-					header_real_cols+=col.rowspan*1;
+					inner_html+="colspan='"+col.colspan+"' ";
+					header_real_cols+=col.colspan*1;
+					colspan=col.colspan;
 				}else{
 					header_real_cols+=1;
 				}
@@ -241,17 +293,43 @@ var se_table=function(target_div_id, sheets_data,config){
 				if(col.style_id){
 					inner_html+=col.style_id+" ";
 				}
-				inner_html+="'";
+				inner_html+="' ";
+				inner_html+="style='width:"+(that.config.cell_width*colspan)+"px;height:"+(that.config.cell_height*rowspan)+"px'";
 				inner_html+=">";
 
 				inner_html+="<div>";
 
 				var cell_value=((!col.value)?col:col.value);
-				inner_html+="<input class='SE_TABLE_BODY_CELL_INPUT' readonly='readonly' value='"+cell_value+"'>";
+
+
+				var sort_input_class='SE_TABLE_HEADER_CELL_INPUT'
+				if(has_multi_row_in_bar){
+					var sort_input_class='SE_TABLE_HEADER_CELL_INPUT SE_TABLE_HEADER_CELL_INPUT_FULL'
+				}
+
+				inner_html+="<input class='"+sort_input_class+"' readonly='readonly' value='"+cell_value+"'>";
+
+				console.log(row_index+" ?= "+(table_obj.header.length-1));
+				if(row_index==table_obj.header.length-1){
+					if(has_multi_row_in_bar){//cannot sort so that not display
+						inner_html+="<div class='SE_TABLE_HEADER_CELL_SORT_DIV SE_TABLE_INVISIBLE'>";
+					}else{
+						inner_html+="<div class='SE_TABLE_HEADER_CELL_SORT_DIV'>";
+					}
+					
+					inner_html+="<div class='SE_TABLE_HEADER_CELL_SORT_DIV_UP' ";
+					inner_html+=" onclick='SETable.sortForColumn(\"SE_TABLE_ATOMTABLE_DIV_"+sheet_index+"_"+table_index+"\","+col_index+",\"number_asc\")'></div>";//↑
+					inner_html+="<div class='SE_TABLE_HEADER_CELL_SORT_DIV_DOWN' ";
+					inner_html+=" onclick='SETable.sortForColumn(\"SE_TABLE_ATOMTABLE_DIV_"+sheet_index+"_"+table_index+"\","+col_index+",\"number_desc\")'></div>";//↓
+					
+					inner_html+="<div style='clear:both'></div>";
+
+					inner_html+="</div>";
+				}
 
 				inner_html+="</div>";
 
-				inner_html+="</td>";
+				inner_html+="</th>";
 			}
 
 			inner_html+="</tr>";
@@ -273,34 +351,44 @@ var se_table=function(target_div_id, sheets_data,config){
 		html+=" style='width:"+(header_real_cols*that.config.cell_width)+"px;"+"'>";
 		html+="<table cellpadding='0' cellspacing='0' border='0'>";
 
-		var row_bgc=0;
+		// var row_bgc=0;
+
+		var body_rows_1=0;
+		var body_rows_2=0;
 
 		for(var row_index in table_obj.body){
 			var row=table_obj.body[row_index];
 
 			html+="<tr id='SE_TABLE_BODY_ROW_"+sheet_index+"_"+table_index+"_"+row_index+"'>";
 
+			body_rows_1=0;
+
 			for(var col_index in row){
 				var col=row[col_index];
 				if(!col)continue;
+				var rowspan=1;
+				var colspan=1;
 				html+="<td ";
 				if(col.rowspan){
 					html+="rowspan='"+col.rowspan+"' ";
+					rowspan=col.rowspan;
 				}
 				if(col.colspan){
-					html+="colspan='"+col.rowspan+"' ";
+					html+="colspan='"+col.colspan+"' ";
+					colspan=col.colspan;
 				}
 				html+="class='";
 				if(col.style_id){
 					html+=col.style_id+" ";
 				}else{
-					if(row_bgc%2==0){
-						html+="SE_TABLE_BG_WHITE ";
-					}else{
-						html+="SE_TABLE_BG_LIGHT ";
-					}
+					// if(row_bgc%2==0){
+					// 	html+="SE_TABLE_BG_WHITE ";
+					// }else{
+					// 	html+="SE_TABLE_BG_LIGHT ";
+					// }
 				}
-				html+="'";
+				html+="' ";
+				html+="style='width:"+(that.config.cell_width*colspan)+"px;height:"+(that.config.cell_height*rowspan)+"px'";
 				html+=">";
 
 				html+="<div>";
@@ -309,11 +397,13 @@ var se_table=function(target_div_id, sheets_data,config){
 				html+="</div>";
 
 				html+="</td>";
+
+				body_rows_1+=rowspan;
 			}
 
 			html+="</tr>";
 
-			row_bgc+=1;
+			// row_bgc+=1;
 		}
 		for(var row_index in table_obj.tail){
 			var row=table_obj.tail[row_index];
@@ -323,24 +413,29 @@ var se_table=function(target_div_id, sheets_data,config){
 			for(var col_index in row){
 				var col=row[col_index];
 				if(!col)continue;
+				var rowspan=1;
+				var colspan=1;
 				html+="<td ";
 				if(col.rowspan){
 					html+="rowspan='"+col.rowspan+"' ";
+					rowspan=col.rowspan;
 				}
 				if(col.colspan){
-					html+="colspan='"+col.rowspan+"' ";
+					html+="colspan='"+col.colspan+"' ";
+					colspan=col.colspan;
 				}
 				html+="class='";
 				if(col.style_id){
 					html+=col.style_id+" ";
 				}else{
-					if(row_bgc%2==0){
-						html+="SE_TABLE_BG_WHITE ";
-					}else{
-						html+="SE_TABLE_BG_LIGHT ";
-					}
+					// if(row_bgc%2==0){
+					// 	html+="SE_TABLE_BG_WHITE ";
+					// }else{
+					// 	html+="SE_TABLE_BG_LIGHT ";
+					// }
 				}
-				html+="'";
+				html+="' ";
+				html+="style='width:"+(that.config.cell_width*colspan)+"px;height:"+(that.config.cell_height*rowspan)+"px'";
 				html+=">";
 
 				html+="<div>";
@@ -349,11 +444,13 @@ var se_table=function(target_div_id, sheets_data,config){
 				html+="</div>";
 
 				html+="</td>";
+
+				body_rows_2+=rowspan;
 			}
 
 			html+="</tr>";
 
-			row_bgc+=1;
+			// row_bgc+=1;
 		}
 
 		html+="</table>";
@@ -361,7 +458,38 @@ var se_table=function(target_div_id, sheets_data,config){
 
 		html+="</div>";
 
+		html+="<div style='clear:both'></div>";
+
 		html+="</div>";
+	
+		that.format_task[TABLE_DIV_ID]=function(){
+			$("#"+TABLE_DIV_ID+" "+".SE_TABLE_ATOMTABLE_DIV").css("width",(that.config.box_width+2)+"px");
+			$("#"+TABLE_DIV_ID+" "+".SE_TABLE_ATOMTABLE_DIV").css("height",(that.config.box_height+1)+"px");
+
+			$("#"+TABLE_DIV_ID+" "+".SE_TABLE_ATOMTABLE_DIV td").css('line-height',(that.config.cell_height-2)+"px");
+			$("#"+TABLE_DIV_ID+" "+".SE_TABLE_ATOMTABLE_DIV th").css('line-height',(that.config.cell_height-2)+"px");
+
+			$("#"+TABLE_DIV_ID+" "+".SE_TABLE_LEFT_DIV .SE_TABLE_LEFT_DIV_CORNER_TABLE th").css('width',(corner_cols*this.config.cell_width-2)+"px");
+			$("#"+TABLE_DIV_ID+" "+".SE_TABLE_LEFT_DIV .SE_TABLE_LEFT_DIV_CORNER_TABLE th").css('height',(corner_rows*this.config.cell_height-2)+"px");
+			$("#"+TABLE_DIV_ID+" "+".SE_TABLE_LEFT_DIV .SE_TABLE_LEFT_DIV_CORNER_TABLE").css('line-height',(that.config.cell_height-2)+"px");
+
+			$("#"+TABLE_DIV_ID+" "+".SE_TABLE_LEFT_DIV").css("width",(corner_cols*that.config.cell_width+2)+"px");
+			$("#"+TABLE_DIV_ID+" "+".SE_TABLE_LEFT_DIV").css("height",(that.config.box_height)+"px");
+			$("#"+TABLE_DIV_ID+" "+".SE_TABLE_LEFT_DIV_INNER").css("width",(corner_cols*that.config.cell_width+2)+"px");
+			$("#"+TABLE_DIV_ID+" "+".SE_TABLE_LEFT_DIV_INNER").css("height",(that.config.box_height-corner_rows*that.config.cell_height)+"px");
+
+			$("#"+TABLE_DIV_ID+" "+".SE_TABLE_RIGHT_DIV").css("width",(that.config.box_width-corner_cols*that.config.cell_width)+"px");
+			$("#"+TABLE_DIV_ID+" "+".SE_TABLE_RIGHT_DIV").css("height",(that.config.box_height+that.config.scroll_size)+"px");
+
+			//if no LEFT
+			$("#"+TABLE_DIV_ID+" "+".SE_TABLE_RIGHT_DIV_FULL").css("width",(that.config.box_width)+"px");
+
+			$("#"+TABLE_DIV_ID+" "+".SE_TABLE_RIGHT_DIV_BODY").css("width",($("#"+TABLE_DIV_ID+" .SE_TABLE_RIGHT_DIV_BODY").css("width").replace('px','')*1+that.config.scroll_size)+"px")
+			$("#"+TABLE_DIV_ID+" "+".SE_TABLE_RIGHT_DIV_BODY").css("height",(that.config.box_height-corner_rows*that.config.cell_height-2)+"px");
+
+			$("#"+TABLE_DIV_ID+" "+".SE_TABLE_HEADER_CELL_SORT_DIV").css("width",'25px !important');
+		}
+
 		return html;
 	}
 
@@ -388,17 +516,16 @@ var se_table=function(target_div_id, sheets_data,config){
 	    for(var i=0;i<right_tr_list.size();i++){
 	    	sortObjs[i]={k:i,v:getRightTrListItemValue(right_tr_list,i)};
 	    }
-	    // console.log(sortObjs)
 
 	    sortObjs.sort(function(a,b){
 	    	if(sort_method=='number_asc'){
-	    		var va=parseFloat(a.v.replace(/[^0-9\.\-\+]/,''));
-	    		var vb=parseFloat(b.v.replace(/[^0-9\.\-\+]/,''));
+	    		var va=parseFloat(a.v.replace(/[^0-9\.\-\+]/g,''));
+	    		var vb=parseFloat(b.v.replace(/[^0-9\.\-\+]/g,''));
 	    		return va-vb;
 	    	}
 	    	else if(sort_method=='number_desc'){
-	    		var va=parseFloat(a.v.replace(/[^0-9\.\-\+]/,''));
-	    		var vb=parseFloat(b.v.replace(/[^0-9\.\-\+]/,''));
+	    		var va=parseFloat(a.v.replace(/[^0-9\.\-\+]/g,''));
+	    		var vb=parseFloat(b.v.replace(/[^0-9\.\-\+]/g,''));
 	    		return vb-va;
 	    	}
 	    	else if(sort_method=='desc'){
@@ -410,7 +537,6 @@ var se_table=function(target_div_id, sheets_data,config){
 	    		return r?1:-1;
 	    	}
 	    })
-	    // console.log(sortObjs)
 
 	    var left=[];
 	    var right=[];
@@ -422,8 +548,6 @@ var se_table=function(target_div_id, sheets_data,config){
 	    	}
 	    	right[k]=right_tr_list[sortObjs[k].k].innerHTML;
 	    }
-	    // console.log(left);
-	    // console.log(right);
 
 	    for(var i=0;i<right_tr_list.length;i++){
 	    	if(left_tr_list.size()>0){
@@ -435,33 +559,10 @@ var se_table=function(target_div_id, sheets_data,config){
 
 	this.init();
 
-	$(".SE_TABLE_LEFT_DIV span").css('width',this.config.cell_width+"px");
-	$(".SE_TABLE_LEFT_DIV span").css('height',this.config.cell_height+"px");
-	$(".SE_TABLE_ATOMTABLE_DIV td").css('width',this.config.cell_width+"px");
-	$(".SE_TABLE_ATOMTABLE_DIV td").css('height',this.config.cell_height+"px");
-	$(".SE_TABLE_ATOMTABLE_DIV th").css('width',this.config.cell_width+"px");
-	$(".SE_TABLE_ATOMTABLE_DIV th").css('height',this.config.cell_height+"px");
-
-	$(".SE_TABLE_ATOMTABLE_DIV td").css('line-height',(this.config.cell_height-2)+"px");
-	$(".SE_TABLE_ATOMTABLE_DIV th").css('line-height',(this.config.cell_height-2)+"px");
-	$(".SE_TABLE_LEFT_DIV span").css('line-height',(this.config.cell_height-2)+"px");
-
-	$(".SE_TABLE_LEFT_DIV").css("width",(this.config.cell_width+2)+"px");
-	$(".SE_TABLE_LEFT_DIV").css("height",(this.config.box_height+2)+"px");
-	$(".SE_TABLE_LEFT_DIV_INNER").css("width",(this.config.cell_width+2)+"px");
-	$(".SE_TABLE_LEFT_DIV_INNER").css("height",(this.config.box_height-this.config.cell_height)+"px");
-
-	$(".SE_TABLE_RIGHT_DIV").css("width",(this.config.box_width-this.config.cell_width)+"px");
-	$(".SE_TABLE_RIGHT_DIV").css("height",(this.config.box_height+this.config.scroll_size)+"px");
-
-	//if no LEFT
-	$(".SE_TABLE_RIGHT_DIV_FULL").css("width",(this.config.box_width)+"px");
-
-	$(".SE_TABLE_ATOMTABLE_DIV").css("width",(this.config.box_width+2)+"px");
-	$(".SE_TABLE_ATOMTABLE_DIV").css("height",(this.config.box_height+1)+"px");
-
-	$(".SE_TABLE_RIGHT_DIV_BODY").css("width",($(".SE_TABLE_RIGHT_DIV_BODY").css("width").replace('px','')*1+this.config.scroll_size)+"px")
-	$(".SE_TABLE_RIGHT_DIV_BODY").css("height",(this.config.box_height-this.config.cell_height-2)+"px");
+	for(var k in this.format_task){
+		var cmd=this.format_task[k];
+		cmd();
+	}
 
 	return this;
 }
@@ -470,6 +571,7 @@ function onSETableBodyScroll(sheet_index,table_index){
 	var RIGHT_DIV_BODY_ID="SE_TABLE_"+sheet_index+"_"+table_index+"_RIGHT_DIV_BODY";
 	var LEFT_DIV_INNER_ID="SE_TABLE_"+sheet_index+"_"+table_index+"_LEFT_DIV_INNER";
 	var RIGHT_DIV_HEADER_ID="SE_TABLE_"+sheet_index+"_"+table_index+"_RIGHT_DIV_HEADER";
+
 
 	var a=document.getElementById(RIGHT_DIV_BODY_ID).scrollTop;    
 	var b=document.getElementById(RIGHT_DIV_BODY_ID).scrollLeft;    
@@ -480,7 +582,7 @@ function onSETableBodyScroll(sheet_index,table_index){
 	var hh=document.getElementById(RIGHT_DIV_HEADER_ID);
 	if(hh){
 		hh.scrollLeft=b;
-		hh.scrollTop=0;       
+		hh.scrollTop=0;   
 	}
 }
 
@@ -493,5 +595,3 @@ function onSETableTabSwitch(active_target){
 	$('div.SE_TABLE_SHEET_DIV').css('display','none');
 	$(SHEET_DIV_ID).css("display",'block');
 }
-
-
