@@ -21,6 +21,8 @@
     }
 
     $(document).ready(function(){
+        console.log('SETable to be built with JSON:');
+        console.log(JSON.parse(json));
         var SETable=se_table('target',JSON.parse(json),config);
         // SETable.sortForColumn('SE_TABLE_ATOMTABLE_DIV_0_0',1,'asc');
         // SETable.sortForColumn('SE_TABLE_ATOMTABLE_DIV_0_0',1,'desc');

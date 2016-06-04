@@ -200,7 +200,7 @@ var se_table=function(target_div_id, sheets_data,config){
 					html+="</tr>";
 				}
 			}else{
-				html+="<tr><th style='width:"+(that.config.cell_width)+"px;height:"+(that.config.cell_height)+"px'><input class='SE_TABLE_LEFT_CELL_INPUT' value='"+table_obj.corner_span+"'></th></tr>";
+				html+="<tr><th style='width:"+(that.config.cell_width)+"px;height:"+(that.config.cell_height)+"px'><input class='SE_TABLE_LEFT_CELL_INPUT' value='"+(table_obj.corner_span?table_obj.corner_span:'')+"'></th></tr>";
 				corner_rows=1;
 				corner_cols=1;
 			}
@@ -405,52 +405,54 @@ var se_table=function(target_div_id, sheets_data,config){
 
 			// row_bgc+=1;
 		}
-		for(var row_index in table_obj.tail){
-			var row=table_obj.tail[row_index];
+		if(table_obj.tail){
+			for(var row_index in table_obj.tail){
+				var row=table_obj.tail[row_index];
 
-			html+="<tr>";
+				html+="<tr>";
 
-			for(var col_index in row){
-				var col=row[col_index];
-				if(!col)continue;
-				var rowspan=1;
-				var colspan=1;
-				html+="<td ";
-				if(col.rowspan){
-					html+="rowspan='"+col.rowspan+"' ";
-					rowspan=col.rowspan;
+				for(var col_index in row){
+					var col=row[col_index];
+					if(!col)continue;
+					var rowspan=1;
+					var colspan=1;
+					html+="<td ";
+					if(col.rowspan){
+						html+="rowspan='"+col.rowspan+"' ";
+						rowspan=col.rowspan;
+					}
+					if(col.colspan){
+						html+="colspan='"+col.colspan+"' ";
+						colspan=col.colspan;
+					}
+					html+="class='";
+					if(col.style_id){
+						html+=col.style_id+" ";
+					}else{
+						// if(row_bgc%2==0){
+						// 	html+="SE_TABLE_BG_WHITE ";
+						// }else{
+						// 	html+="SE_TABLE_BG_LIGHT ";
+						// }
+					}
+					html+="' ";
+					html+="style='width:"+(that.config.cell_width*colspan)+"px;height:"+(that.config.cell_height*rowspan)+"px'";
+					html+=">";
+
+					html+="<div>";
+					var cell_value=((!col.value)?col:col.value);
+					html+="<input class='SE_TABLE_BODY_CELL_INPUT' readonly='readonly' value='"+cell_value+"'>";
+					html+="</div>";
+
+					html+="</td>";
+
+					body_rows_2+=rowspan;
 				}
-				if(col.colspan){
-					html+="colspan='"+col.colspan+"' ";
-					colspan=col.colspan;
-				}
-				html+="class='";
-				if(col.style_id){
-					html+=col.style_id+" ";
-				}else{
-					// if(row_bgc%2==0){
-					// 	html+="SE_TABLE_BG_WHITE ";
-					// }else{
-					// 	html+="SE_TABLE_BG_LIGHT ";
-					// }
-				}
-				html+="' ";
-				html+="style='width:"+(that.config.cell_width*colspan)+"px;height:"+(that.config.cell_height*rowspan)+"px'";
-				html+=">";
 
-				html+="<div>";
-				var cell_value=((!col.value)?col:col.value);
-				html+="<input class='SE_TABLE_BODY_CELL_INPUT' readonly='readonly' value='"+cell_value+"'>";
-				html+="</div>";
+				html+="</tr>";
 
-				html+="</td>";
-
-				body_rows_2+=rowspan;
+				// row_bgc+=1;
 			}
-
-			html+="</tr>";
-
-			// row_bgc+=1;
 		}
 
 		html+="</table>";
