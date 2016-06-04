@@ -109,6 +109,17 @@
 
 ## 使用方法
 
+### 引用
+
+首先你需要引用jQuery。比如妖度的CDN里的。
+
+    <script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+
+然后引用SETable的JS和CSS。
+    
+   	<script type="text/javascript" src="se_table.js"></script>
+    <link rel="stylesheet" type="text/css" href="se_table.css">
+
 ### 初始化
 
 在HTML中构建一个目标DIV，例如`<div id="target"></div>`。SETable所有新生成的元素均会包含在其内。
