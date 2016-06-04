@@ -1,0 +1,208 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>SETable by sinri</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <script src="javascripts/scale.fix.js"></script>
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1 class="header">SETable</h1>
+        <p class="header">Excel-style table in Html+jQuery+CSS. Tab for Sheets, and scrollable tables with Fixed Header and Left Bar for each.</p>
+
+        <ul>
+          <li class="download"><a class="buttons" href="https://github.com/sinri/SETable/zipball/master">Download ZIP</a></li>
+          <li class="download"><a class="buttons" href="https://github.com/sinri/SETable/tarball/master">Download TAR</a></li>
+          <li><a class="buttons github" href="https://github.com/sinri/SETable">View On GitHub</a></li>
+        </ul>
+
+        <p class="header">This project is maintained by <a class="header name" href="https://github.com/sinri">sinri</a></p>
+
+
+      </header>
+      <section>
+        <h1>
+<a id="setable" class="anchor" href="#setable" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>SETable</h1>
+
+<p>利用类Excel多页多表兼容数据结构自动生成分页分表的HTML前端界面。支持合并单元格、单元格格式设定、按列排序等实际生产环境中所利用的功能。SETable是为<a href="https://bi.leqee.com/">LeqeeData项目</a>而设计的。参考了早先开发的<a href="http://github.everstray.com/SinriTable.js/">SinriTable.js</a>项目，并针对报表展示功能作了特异化。</p>
+
+<p>主要达成的需求如下。让我们携起手来把乐其的业务方干掉吧，他们都是妖怪。</p>
+
+<ol>
+<li>合并单元格展示可能。</li>
+<li>列标题区块固定，上下滚动可能。</li>
+<li>左侧行标题区块固定，左右滚动可能。</li>
+<li>表体滚动后，每一可见内容单元格的行标题和列标题的对应显示保持正常。</li>
+<li>可以按某一列排序。</li>
+</ol>
+
+<h2>
+<a id="结构设计" class="anchor" href="#%E7%BB%93%E6%9E%84%E8%AE%BE%E8%AE%A1" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>结构设计</h2>
+
+<p>一个页面只能构建一个SETable。一个SETable由多个Sheet构成，每个Sheet内包含若干个AtomTable，每个AtomTable可以包含一个在左侧的行标题区，一个在右侧的列标题区和表体。AtomTable的左上角为特殊的行标题，属于固定内容。</p>
+
+<p>如下所示：</p>
+
+<table>
+<thead>
+<tr>
+<th>左上角</th>
+<th>列标题区</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>行标题区</td>
+<td>表体</td>
+</tr>
+</tbody>
+</table>
+
+<p>以上四个区块均可以视为四个表格，要求相邻边的格数一致。</p>
+
+<h2>
+<a id="数据结构" class="anchor" href="#%E6%95%B0%E6%8D%AE%E7%BB%93%E6%9E%84" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>数据结构</h2>
+
+<p>整个SETable由一个对象（Object）控制，可以由JSON解析而来，定义如下：</p>
+
+<pre><code>var SETableDataObject = {
+    sheets:[
+        SheetDataObject_1,
+        SheetDataObject_2 // ...
+    ]
+}
+</code></pre>
+
+<p>每个Sheet的构成为：</p>
+
+<pre><code>var SheetDataObject = {     
+    sheet_name:"Sheet Name",
+    sheet_data:[
+        AtomTableDataObject_1,
+        AtomTableDataObject_2 // ...
+    ]
+}
+</code></pre>
+
+<p>每个AtomTable的构成为：</p>
+
+<pre><code>var AtomTableDataObject = {
+    corner_span:TableElementDataObject_Corner,
+    fixed_left:TableElementDataObject_Left,
+    header:TableElementDataObject_Header,
+    body:TableElementDataObject_Body,
+    tail:TableElementDataObject_Tail
+}
+</code></pre>
+
+<p>其中header和body是必须存在的，tail是可选的。fixed_left存在时，corner_span可选；fixed_left不存在时，corner_span将被忽略。</p>
+
+<p>每个TableElementDataObject的构成为：</p>
+
+<pre><code>var TableElementDataObject = [
+    TableRowDataObject_1,
+    TableRowDataObject_2 // ...
+]
+</code></pre>
+
+<p>每个TableRowDataObject的构成为：</p>
+
+<pre><code>var TableRowDataObject = [
+    TableCellDataObject_1,
+    TableCellDataObject_2 // ...
+]
+</code></pre>
+
+<p>每个TableCellDataObject的构成为：</p>
+
+<pre><code>// as string
+var TableCellDataObject = "VALUE OF CELL AS STRING"
+// as number
+var TableCellDataObject = 1
+// as object
+var TableCellDataObject = {
+    value: 'string or number', 
+    rowspan: 1, // default as 1
+    colspan: 1, // default as 1
+    style_id: 'CLASS_NAME FOR THIS TH/TD ELEMENT' // default as empty
+}
+</code></pre>
+
+<p>当TableCellDataObject被定义为对象时，value是必选的。</p>
+
+<h2>
+<a id="外观配置" class="anchor" href="#%E5%A4%96%E8%A7%82%E9%85%8D%E7%BD%AE" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>外观配置</h2>
+
+<p>使用config数据结构进行附加的配置。</p>
+
+<pre><code>var config={
+    cell:{
+        width: 120,
+        height: 30
+    },
+    box:{
+        width: 300,
+        height: 300
+    },
+    browser: { 
+        browser:'Safari', 
+        version : '601.6.17', 
+        agent : 'Safari 601.6.17', 
+        platform : 'Mac OS X' 
+    }
+}
+</code></pre>
+
+<p>每个最小单元格的标准尺寸以cell表明。合并单元格后的尺寸按此标准尺寸加倍。每个表格整体可见区域尺寸由box表明。对于不同浏览器下的显示兼容问题，SETable提供了根据UserAgent信息进行对已知的浏览器环境进行适配的参数即browser，可以参照例子进行配置。</p>
+
+<h2>
+<a id="使用方法" class="anchor" href="#%E4%BD%BF%E7%94%A8%E6%96%B9%E6%B3%95" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>使用方法</h2>
+
+<h3>
+<a id="初始化" class="anchor" href="#%E5%88%9D%E5%A7%8B%E5%8C%96" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>初始化</h3>
+
+<p>在HTML中构建一个目标DIV，例如<code>&lt;div id="target"&gt;&lt;/div&gt;</code>。SETable所有新生成的元素均会包含在其内。</p>
+
+<pre><code>var SETable=se_table('target',SETableDataObject,config);
+</code></pre>
+
+<h3>
+<a id="排序" class="anchor" href="#%E6%8E%92%E5%BA%8F" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>排序</h3>
+
+<p>如果行标题区块中不存在包含跨行合并单元格，则列标题区最下方一行的每一个单元格内部右侧均会显示上下三角，用作排序按钮，默认按照数值化排序。</p>
+
+<p>如果需要在初始化之后立即排序，可以使用sortForColumn方法。</p>
+
+<pre><code>SETable.sortForColumn(ID_OF_TABLE,INDEX_OF_COLUMN_TO_SORT,SORT_METHOD);
+</code></pre>
+
+<ul>
+<li>ID_OF_TABLE 每个表格的ID为 <code>SE_TABLE_ATOMTABLE_DIV_s_t</code> ，其中s为sheet的索引号，t为table的索引号，例如第一个sheet的第一个table的id为SE_TABLE_ATOMTABLE_DIV_0_0。</li>
+<li>INDEX_OF_COLUMN_TO_SORT 要排序的列的索引号，第一列就是0。</li>
+<li>SORT_METHOD 排序的方法，可取值为<code>asc</code>（字符顺序排序）、<code>desc</code>（字符倒序排序）、<code>number_asc</code>（数值化顺序排序）、<code>number_desc</code>（数值化倒序排序）。数值化排序会先移除表格单元格内容中的非数字字符串以转换成数字进行排序，主要用来处理带千分位分隔符的内容。</li>
+</ul>
+
+<h1>
+<a id="使用许可" class="anchor" href="#%E4%BD%BF%E7%94%A8%E8%AE%B8%E5%8F%AF" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>使用许可</h1>
+
+<p>Under the MIT License (MIT)</p>
+
+<p>Copyright (c) 2016 Everstray Jun Sinri Edogawa</p>
+      </section>
+      <footer>
+        <p><small>Hosted on <a href="https://pages.github.com">GitHub Pages</a> using the Dinky theme</small></p>
+      </footer>
+    </div>
+    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
+		
+  </body>
+</html>
