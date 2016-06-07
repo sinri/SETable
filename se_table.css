@@ -61,7 +61,8 @@
 .SE_TABLE_RIGHT_DIV {
   height:auto; 
   float:left; 
-  overflow: auto;
+  overflow-y: hidden;
+  overflow-x: auto;
   background-color: white;
 }
 .SE_TABLE_RIGHT_DIV_HEADER {
@@ -81,7 +82,7 @@
 
 .SE_TABLE_RIGHT_DIV_BODY {
   width:100%; 
-  overflow:auto;
+  overflow:scroll;
 }
 .SE_TABLE_RIGHT_DIV_BODY table{
   border-collapse: collapse;
