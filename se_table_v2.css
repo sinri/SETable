@@ -1,0 +1,72 @@
+.SE_TABLE_TAB_DIV {
+  width: 100%;
+  padding: 4px;
+  border-bottom: 1px solid lightgray;
+}
+.SE_TABLE_TAB_DIV span {
+  padding: 5px;
+  margin: 2px 2px 0px 2px;
+  border-top-left-radius: 5px;
+  border-top-right-radius: 5px;
+  border: 1px solid lightgray;
+  line-height: 20px;
+}
+.SE_TABLE_TAB_DIV span.SE_TABLE_TAB_SPAN_ACTIVE{
+  background-color: lightgray;
+}
+.SE_TABLE_TAB_DIV span.SE_TABLE_TAB_SPAN_INACTIVE{
+  background-color: white;
+}
+.SE_TABLE_SHEETS_DIV {
+  width: 98%;
+  margin: 20px auto;
+}
+.SE_TABLE_SHEET_DIV {
+  display: none;
+}
+.SE_TABLE_ATOMTABLE_DIV {
+  background-color: #FEFEFE;
+  margin-bottom: 10px;
+  overflow: auto;
+}
+
+.SE_TABLE_ATOMTABLE_DIV h3 {
+  font-size: 18px;
+}
+
+.SE_TABLE_ATOMTABLE_DIV table{
+  border-collapse:separate;
+  border-spacing:0px;
+  background-color: #EFEFEF;
+}
+.SE_TABLE_ATOMTABLE_DIV table tr,th,td{
+  border-spacing: 1px;
+}
+
+.SE_TABLE_ATOMTABLE_DIV  th,td{
+  width: 100px;
+  height: 50px;
+  background-color: #FEFEFE;
+}
+.SE_TABLE_ATOMTABLE_DIV  thead{
+  position: relative;
+}
+.SE_TABLE_ATOMTABLE_DIV .corner_cell {
+  position: relative; 
+  left: -1px;
+  background-color: #108DCB;
+  z-index: 2;
+  color: white;
+}
+.SE_TABLE_ATOMTABLE_DIV  .left_cell{
+  position: relative; 
+  left: -1px;
+  background-color: #008DCB;
+  color: white;
+}
+.SE_TABLE_ATOMTABLE_DIV  .header_cell{
+  position: relative;
+  background-color: #008DCB;
+  z-index: 1;
+  color: white;
+}
